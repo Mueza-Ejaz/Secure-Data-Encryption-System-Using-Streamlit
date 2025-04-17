@@ -7,6 +7,71 @@ st.set_page_config(page_title="Secure Data System", page_icon="🔐", layout="ce
 st.title(" Encrypt Your Data, Stay Protected")
 
 
+def custom_css():
+    st.markdown(
+        """
+        <style>
+          
+           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Applying font to the entire app */
+            html, body, [class*="st-"] {
+           font-family: Georgia, serif; /* Applying Poppins font */
+        }
+
+        .stApp{
+            background-image: url("https://plus.unsplash.com/premium_photo-1701179596614-9c64f50cda76?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+            z-index:-1;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: black;
+            text-align: center;
+        }
+
+        .stApp > div {
+        backdrop-filter: blur(5px); /* Prevents blur on text */
+    }
+
+        .stheader {
+        font-family: Verdana, sans-serif; !important 
+        font-size: 30px;
+        color: #4CAF50; /* Green */
+        text-align: left;
+        }
+
+
+        .stsubheader {
+        font-family: 'Courier New', monospace; !important 
+        font-size: 30px;
+        color: #4CAF50; /* Green */
+        text-align: left;
+        }
+
+    
+
+        </style>
+
+        """,
+
+        unsafe_allow_html=True,
+    )
+
+custom_css()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Generate and Store Encryption Key in Session ---
 if "fernet" not in st.session_state: # store data for temporary 
     key = Fernet.generate_key()
@@ -23,15 +88,15 @@ if "attempts" not in st.session_state:
     st.session_state.attempts = 0
 
 if "is_logged_in" not in st.session_state:
-    st.session_state.is_logged_in = True
+    st.session_state.is_logged_in = False
 
 if "menu" not in st.session_state:
     st.session_state.menu = "Home"
 
 
 # --- Dummy Credentials ---
-VALID_USERNAME = "admin"
-VALID_PASSWORD = "1234"
+VALID_USERNAME = "Mueza"
+VALID_PASSWORD = "862001"
 
 
 # --- Helpers ---
@@ -55,16 +120,19 @@ def login_page():
             st.success(" Login successful!")
             st.session_state.is_logged_in = True
             st.session_state.attempts = 0
+            st.session_state.menu = "Home"
+            st.rerun()
         else:
-            st.error(" Invalid credentials")
+            st.error(" Invalid username or password")
+            st.session_state.menu = "Home"  # Reset menu to show login page
 
 
 # --- Insert Data ---
 def insert_data():
-    st.subheader(" Store New Data")
-    user_key = st.text_input("Enter your passkey", type="password")
-    user_text = st.text_area("Enter your secret data")
-    if st.button("Store"):
+    st.subheader(" Save Your Secret")
+    user_key = st.text_input("Create your passkey", type="password")
+    user_text = st.text_area("Write your secret data here")
+    if st.button("Save"):
         if user_key and user_text:
             hashed_key = hash_passkey(user_key)
             encrypted = encrypt_text(user_text)
@@ -76,14 +144,14 @@ def insert_data():
 
 # --- Retrieve Data ---
 def retrieve_data():
-    st.subheader(" Retrieve Your Data")
+    st.subheader(" Unlock Your Secret")
     user_key = st.text_input("Enter your passkey", type="password")
-    if st.button("Retrieve"):
+    if st.button("Unlock"):
         if user_key:
             hashed_key = hash_passkey(user_key)
             if hashed_key in st.session_state.stored_data:
                 decrypted = decrypt_text(st.session_state.stored_data[hashed_key])
-                st.success(" Data decrypted successfully:")
+                st.success(" Here's your secret data:")
                 st.code(decrypted)
                 st.session_state.attempts = 0
             else:
@@ -92,35 +160,31 @@ def retrieve_data():
                 st.error(f" Incorrect passkey. {remaining} attempts left.")
                 if st.session_state.attempts >= 3:
                     st.session_state.is_logged_in = False
+                    st.session_state.menu = "Home"
 
 
-# --- Navigation + Interface ---
+# --- Main Interface ---
 if st.session_state.is_logged_in:
-    st.markdown("###  Choose What You Want To Do")
+    st.markdown("###  Choose an Option Below")
 
     col1, col2, col3 = st.columns(3)
     with col1:
         if st.button(" Home"):
             st.session_state.menu = "Home"
     with col2:
-        if st.button(" Insert Data"):
+        if st.button(" Save Secret"):
             st.session_state.menu = "Insert Data"
     with col3:
-        if st.button(" Retrieve Data"):
+        if st.button(" View Secret"):
             st.session_state.menu = "Retrieve Data"
 
-    # Page Logic
+    # --- Page Logic ---
     if st.session_state.menu == "Home":
-        st.info(" Use the buttons above to store or retrieve secure data.")
+        st.info(" Use the buttons above to securely store or retrieve your private data.")
     elif st.session_state.menu == "Insert Data":
         insert_data()
     elif st.session_state.menu == "Retrieve Data":
         retrieve_data()
+
 else:
     login_page()
-
-
-
-
-
-
