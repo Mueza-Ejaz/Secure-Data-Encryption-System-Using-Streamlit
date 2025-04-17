@@ -48,6 +48,51 @@ def custom_css():
         text-align: left;
         }
 
+        abel {
+        color: black !important; /* Changing label color to green */
+        font-size: 18px; /* Increasing font size */
+        font-weight: bold; /* Making it bold */
+    }
+    
+   input[type=number] {
+        border-radius: 10px 0px 10px 0px !important; /* Rounded corners */
+        border: 2px solid #3498db !important; /* Blue border */
+        padding: 10px !important;
+        font-size: 16px !important;
+        background: rgba(255, 255, 255, 0.8) !important; /* Semi-transparent background */
+        color: black !important;
+        outline: none !important;
+    }
+
+
+
+
+    .stButton > button {
+        background-color: blue !important; /* Change button background to blue */
+        color: white !important; /* Change text color to white */
+        font-size: 18px; /* Increase font size */
+        border-radius: 10px 0px 10px 0px; /* Rounded corners */
+        padding: 10px 20px; /* Add padding */
+        border: 2px solid black; /* Black border */
+    }
+
+    /* Change button color when hovered */
+    .stButton > button:hover {
+        background-color: darkblue !important; /* D
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f1f1f1;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+    }
     
 
         </style>
@@ -188,3 +233,19 @@ if st.session_state.is_logged_in:
 
 else:
     login_page()
+
+st.markdown(
+    """
+    <div style="text-align: center; padding: 10px; font-size: 14px; font-weight: bold; color: #333;">
+        Copyrights Reserved &copy; Mueza Ejaz
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
+
+
+
+
