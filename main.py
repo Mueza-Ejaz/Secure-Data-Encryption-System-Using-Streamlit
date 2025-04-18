@@ -65,6 +65,19 @@ def custom_css():
     }
 
 
+   .custom-st-info {
+    background-color: transparent; /* fully transparent background */
+    color: green;
+    border-left: 6px solid #00bcd4; /* light blue accent line */
+    padding: 15px;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 700px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
 
 
     .stButton > button {
@@ -103,18 +116,6 @@ def custom_css():
     )
 
 custom_css()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Generate and Store Encryption Key in Session ---
@@ -225,7 +226,14 @@ if st.session_state.is_logged_in:
 
     # --- Page Logic ---
     if st.session_state.menu == "Home":
-        st.info(" Use the buttons above to securely store or retrieve your private data.")
+       st.markdown(
+    """
+    <div class="custom-st-info">
+         Use the buttons above to securely store or retrieve your private data.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
     elif st.session_state.menu == "Insert Data":
         insert_data()
     elif st.session_state.menu == "Retrieve Data":
