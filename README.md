@@ -80,7 +80,7 @@ This project stores data in memory only (session state) and is for educational/d
 ## 🚀 Live Demo
 
 Try the app live here:  
-👉 [Secure Data Vault – Streamlit App]()
+👉 [Secure Data Vault – Streamlit App](https://secure-data-encryption-system-using-app-sde.streamlit.app/)
 
 > Use the default credentials to log in and test:
 > - Username: `mueza`  
